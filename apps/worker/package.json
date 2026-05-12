@@ -1,0 +1,10 @@
+{
+  "name": "@intellimeet/worker",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/worker.js",
+  "scripts": {
+    "dev": "node src/worker.js",
+    "start": "node src/worker.js"
+  }
+}

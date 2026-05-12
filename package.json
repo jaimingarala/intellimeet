@@ -1,0 +1,17 @@
+{
+  "name": "intellimeet",
+  "private": true,
+  "version": "0.1.0",
+  "description": "IntelliMeet monorepo",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev -w @intellimeet/api",
+    "dev:web": "npm run dev -w @intellimeet/web",
+    "dev:socket": "node apps/socket/src/server.js",
+    "dev:worker": "node apps/worker/src/worker.js",
+    "check": "echo \"Add lint/test tooling in next step\""
+  }
+}
