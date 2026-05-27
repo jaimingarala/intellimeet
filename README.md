@@ -1,4 +1,4 @@
-**# IntellMeet – AI-Powered Enterprise Meeting & Collaboration Platform
+## IntellMeet – AI-Powered Enterprise Meeting & Collaboration Platform
 
 IntellMeet is a full-stack MERN application designed to improve communication and productivity in remote and hybrid teams. The platform combines real-time meetings, collaboration tools, and AI-powered meeting intelligence into a single system.
 
@@ -58,8 +58,3 @@ This project helped us gain practical experience in:
 * WebRTC fundamentals
 * Team collaboration workflows
 * Scalable backend architecture
-
-## Conclusion
-
-IntellMeet demonstrates a strong understanding of modern full-stack web development by combining real-time communication, secure authentication, collaboration workflows, and scalable application architecture into one enterprise-style platform.
-**
