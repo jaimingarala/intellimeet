@@ -58,3 +58,10 @@ This project helped us gain practical experience in:
 * WebRTC fundamentals
 * Team collaboration workflows
 * Scalable backend architecture
+
+## Team
+ * Jaimin
+ * Praneetha
+ * Nishanthini
+ * Muthupetchi
+ 
