@@ -25,7 +25,6 @@ async function create(payload, hostUser) {
   });
 
   return { ok: true, status: 201, data: meeting };
-  return { ok: true, status: 201, data: meeting };
 }
 
 async function list(query) {

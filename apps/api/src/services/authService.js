@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const {
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET,
@@ -38,7 +39,7 @@ function buildTokens(userId, email, role) {
   );
 
   const refreshToken = signToken(
-    { sub: userId, email, role, type: 'refresh' },
+    { sub: userId, email, role, type: 'refresh', jti: crypto.randomUUID() },
     REFRESH_TOKEN_SECRET,
     REFRESH_TOKEN_EXPIRES_IN_SECONDS
   );

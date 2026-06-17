@@ -13,10 +13,20 @@
     "dev:web": "npm run dev -w @intellimeet/web",
     "dev:socket": "node apps/socket/src/server.js",
     "dev:worker": "node apps/worker/src/worker.js",
+    "test": "node --test tests/jwt.test.js tests/password.test.js",
+    "lint": "node scripts/lint.js",
+    "format:check": "node scripts/format-check.js",
+    "smoke:scale": "node scripts/test_socket_scale.js",
     "smoke:api": "node scripts/test_refresh.js && node scripts/smoke_test.js && node scripts/smoke_persist.js && node scripts/smoke_check_persist.js",
     "smoke:socket": "node scripts/smoke_socket_presence.js",
     "smoke:messages": "node scripts/test_messages_api.js",
     "test:socket": "node scripts/test_socket_integration.js",
     "check": "node scripts/check.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.3"
   }
 }

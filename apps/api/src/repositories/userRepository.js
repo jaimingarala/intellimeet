@@ -4,7 +4,7 @@ try {
   if (mongoose && mongoose.model) {
     UserModel = require('../models/userModel')(mongoose);
   }
-} catch (e) {
+} catch {
   UserModel = null;
 }
 

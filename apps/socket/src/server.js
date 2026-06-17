@@ -30,16 +30,17 @@ if (process.env.MONGODB_URI) {
           console.log('Socket service: connected to MongoDB for chat persistence');
         } catch (e) {
           // eslint-disable-next-line no-console
-          console.warn('Socket service: failed to initialize ChatMessage model', e.message || e);
+          const _e = e;
+          console.warn('Socket service: failed to initialize ChatMessage model', _e.message || _e);
         }
       })
       .catch((err) => {
         // eslint-disable-next-line no-console
         console.warn('Socket service: MongoDB connection failed:', err.message || err);
       });
-  } catch (e) {
+  } catch (_e) {
     // eslint-disable-next-line no-console
-    console.warn('Socket service: mongo packages not available', e.message || e);
+    console.warn('Socket service: mongo packages not available', _e.message || _e);
   }
 }
 
@@ -64,7 +65,7 @@ async function getMeetingMessages(meetingId) {
   return meetingMessages.get(meetingId) || [];
 }
 
-async function appendMeetingMessage(meetingId, message) {
+async function _appendMeetingMessage(meetingId, message) {
   if (redisClient) {
     const key = `meeting:${meetingId}:messages`;
     // If we have a Mongo model, persist first so we can store the canonical persisted
@@ -213,11 +214,13 @@ try {
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
-          console.warn('Redis adapter disabled:', error.message);
+          const _error = error;
+          console.warn('Redis adapter disabled:', _error.message);
         });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.warn('Redis adapter packages are not installed; continuing without Redis scaling');
+      const _error = error;
+      console.warn('Redis adapter packages are not installed; continuing without Redis scaling', _error && _error.message);
     }
   }
 
@@ -548,10 +551,10 @@ try {
       console.log(`socket disconnected ${socket.id} reason=${reason}`);
     });
   });
-} catch (e) {
-  // eslint-disable-next-line no-console
-  console.warn('socket.io is not installed; socket endpoints disabled');
-}
+  } catch (_e) {
+    // eslint-disable-next-line no-console
+    console.warn('socket.io is not installed; socket endpoints disabled', _e && _e.message);
+  }
 
 server.listen(PORT, () => {
   console.log(`Socket service listening on port ${PORT}`);

@@ -17,6 +17,8 @@ const syntaxFiles = [
   'scripts/smoke_test.js',
   'scripts/smoke_persist.js',
   'scripts/smoke_check_persist.js',
+  'tests/jwt.test.js',
+  'tests/password.test.js',
 ];
 
 function runNodeCheck(file) {
@@ -50,6 +52,9 @@ for (const file of syntaxFiles) {
 }
 
 runCommand(process.execPath, ['scripts/test_refresh.js']);
+runCommand(process.execPath, ['scripts/lint.js']);
+runCommand(process.execPath, ['scripts/format-check.js']);
+runCommand(process.execPath, ['--test', 'tests/jwt.test.js', 'tests/password.test.js']);
 runCommand(process.execPath, ['scripts/smoke_test.js']);
 runCommand(process.execPath, ['scripts/smoke_persist.js']);
 runCommand(process.execPath, ['scripts/smoke_check_persist.js']);

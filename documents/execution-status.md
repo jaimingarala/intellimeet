@@ -45,13 +45,14 @@
 - Smoke validation for socket presence and message persistence currently passes against the live API and socket servers.
 - CI uses the same live-service smoke scripts to validate the working slices on every run.
 - `npm run dev` starts both API and socket services together.
+- `npm run test` now runs a focused built-in unit suite for JWT and password helpers.
 
 ## Remaining Work
 
-1. Add a real repository-wide quality gate (`npm run check`) and wire it into CI.
+1. Add formal lint/format checks if you want stricter code-style enforcement beyond syntax and unit tests.
 
 ## Notes for the Next Chat
 
 - The key implementation already exists; do not restart from planning.
-- The safest next step is to replace the placeholder `check` script with a real syntax/test gate and keep CI aligned with it.
+- The safest next step is to add a lint/format gate if you want stronger repository hygiene.
 - Use the Mongo URI above if you need to run the API locally.

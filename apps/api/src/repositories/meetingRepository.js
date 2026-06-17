@@ -4,7 +4,7 @@ try {
   if (mongoose && mongoose.model) {
     MeetingModel = require('../models/meetingModel')(mongoose);
   }
-} catch (e) {
+} catch {
   MeetingModel = null;
 }
 

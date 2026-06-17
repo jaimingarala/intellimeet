@@ -56,11 +56,7 @@ async function run() {
   const sock = connectSocket(alice.accessToken);
   await new Promise((res, rej) => { sock.once('connect', res); sock.once('connect_error', rej); sock.connect(); });
 
-  const joined = await (async () => {
-    const p = new Promise((res, rej) => { sock.once('meeting:joined', res); sock.once('meeting:error', rej); });
-    sock.emit('meeting:join', { meetingId: meeting.id });
-    return p;
-  })();
+  await new Promise((res, rej) => { sock.once('meeting:joined', res); sock.once('meeting:error', rej); sock.emit('meeting:join', { meetingId: meeting.id }); });
 
   // send chat message
   const msgText = 'persistence test ' + Date.now();

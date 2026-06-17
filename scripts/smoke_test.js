@@ -40,13 +40,13 @@ async function run() {
     r = await fetch(`${base}/api/meetings`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${access}` }, body: JSON.stringify(meeting) });
     console.log('create status', r.status);
     const createBody = await r.text();
-    try { console.log('create body', JSON.parse(createBody)); } catch(e) { console.log('create raw', createBody); }
+    try { console.log('create body', JSON.parse(createBody)); } catch { console.log('create raw', createBody); }
 
     console.log('\nGET /api/meetings');
     r = await fetch(`${base}/api/meetings`, { headers: { Authorization: `Bearer ${access}` } });
     console.log('list status', r.status);
     const listBody = await r.text();
-    try { console.log('list body', JSON.parse(listBody)); } catch(e) { console.log('list raw', listBody); }
+    try { console.log('list body', JSON.parse(listBody)); } catch { console.log('list raw', listBody); }
 
   } catch (err) {
     console.error('SMOKE ERROR', err);

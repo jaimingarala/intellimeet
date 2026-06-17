@@ -26,6 +26,7 @@ Use this file as the starting point for a new chat so we do not repeat already c
 - Web config now requires `apps/web/.env` with `VITE_API_BASE`.
 - Temporary root files were removed and `.gitignore` now filters env, temp, and build noise.
 - A combined root `npm run dev` launcher starts API and socket together.
+- Root `npm run test` now runs a small unit suite for JWT and password helpers.
 
 ## Important Runtime Details
 
@@ -42,14 +43,15 @@ Use this file as the starting point for a new chat so we do not repeat already c
 
 ## Recommended Next Step
 
-Replace the placeholder root `check` script with a real quality gate, then wire it into CI so syntax and smoke coverage stay aligned.
+Add a lint/format check if you want stricter code-style enforcement alongside the current syntax, unit, and smoke coverage.
 
 ## Recent Verification
 
 - `node scripts/test_refresh.js` passed.
 - `npm run smoke:messages` passed.
+- `npm run test` passed.
 - `npm run dev` started API and socket together successfully.
 
 ## Short Prompt for a New Chat
 
-Continue from the current IntelliMeet implementation. Auth, meetings, Mongo persistence, refresh-token storage, env loading, `.gitignore`, Socket.io auth/presence/chat/signaling, and the combined dev launcher already exist. Next, replace the placeholder root `check` script with a real quality gate and keep CI aligned with it. Do not redo the completed backend foundation or recreate already cleaned files.
+Continue from the current IntelliMeet implementation. Auth, meetings, Mongo persistence, refresh-token storage, env loading, `.gitignore`, Socket.io auth/presence/chat/signaling, the combined dev launcher, and a root unit test suite already exist. Next, add a lint/format check if you want stricter code-style enforcement. Do not redo the completed backend foundation or recreate already cleaned files.

@@ -4,7 +4,7 @@ try {
   if (mongoose && mongoose.model) {
     ChatMessageModel = require('../models/chatMessageModel')(mongoose);
   }
-} catch (e) {
+} catch {
   ChatMessageModel = null;
 }
 

@@ -1,10 +1,12 @@
 const express = require('express');
+const cors=require('cors');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const meetingsRoutes = require('./routes/meetingsRoutes');
 const { sendError } = require('./utils/http');
 
 const app = express();
+app.use(cors({ origin: 'http://localhost:5173' }));
 
 app.use(express.json());
 
@@ -29,7 +31,7 @@ app.use((req, res) => {
 });
 
 // Global error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res, _next) => {
   // eslint-disable-next-line no-console
   console.error('Unhandled error:', err && (err.stack || err.message || err));
   const status = err && err.status ? err.status : 500;

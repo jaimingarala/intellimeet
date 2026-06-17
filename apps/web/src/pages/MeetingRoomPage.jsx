@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { tokenStore } from '../api/auth';
 import { getMeeting } from '../api/meetings';
@@ -12,7 +12,11 @@ export default function MeetingRoomPage() {
   const { meetingId } = useParams();
   const navigate = useNavigate();
   const token = tokenStore.getAccess();
-  const socket = useMemo(() => (token ? createMeetingSocket(token) : null), [token]);
+  const socketRef = useRef(null);
+if (!socketRef.current && token) {
+  socketRef.current = createMeetingSocket(token);
+}
+const socket = socketRef.current;
 
   const [meeting, setMeeting] = useState(null);
   const [participants, setParticipants] = useState([]);
@@ -51,7 +55,7 @@ export default function MeetingRoomPage() {
   }, [meetingId, navigate, token]);
 
   useEffect(() => {
-    if (!socket) return undefined;
+    if (!socket) return;
 
     function handleConnect() {
       setConnectionState('connected');
@@ -133,20 +137,22 @@ export default function MeetingRoomPage() {
     setConnectionState('connecting');
     socket.connect();
 
-    return () => {
-      socket.off('connect', handleConnect);
-      socket.off('connect_error', handleConnectError);
-      socket.off('socket:ready', handleReady);
-      socket.off('meeting:joined', handleJoined);
-      socket.off('participant:update', handleParticipantUpdate);
-      socket.off('meeting:error', handleMeetingError);
-      socket.off('chat:new-message', handleChatMessage);
-      socket.off('chat:typing', handleTyping);
-      socket.off('signal', handleSignal);
+   return () => {
+  if (!socket) return;
 
-      socket.emit('meeting:leave', { meetingId });
-      socket.disconnect();
-    };
+  socket.off('connect', handleConnect);
+  socket.off('connect_error', handleConnectError);
+  socket.off('socket:ready', handleReady);
+  socket.off('meeting:joined', handleJoined);
+  socket.off('participant:update', handleParticipantUpdate);
+  socket.off('meeting:error', handleMeetingError);
+  socket.off('chat:new-message', handleChatMessage);
+  socket.off('chat:typing', handleTyping);
+  socket.off('signal', handleSignal);
+
+  socket.emit('meeting:leave', { meetingId });
+  socket.disconnect();
+};
   }, [meetingId, socket]);
 
   function handleSendMessage(e) {

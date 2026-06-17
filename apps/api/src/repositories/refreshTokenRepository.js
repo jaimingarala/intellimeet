@@ -4,7 +4,7 @@ try {
   if (mongoose && mongoose.model) {
     RefreshTokenModel = require('../models/refreshTokenModel')(mongoose);
   }
-} catch (e) {
+} catch {
   RefreshTokenModel = null;
 }
 

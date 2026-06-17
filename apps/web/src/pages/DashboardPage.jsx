@@ -11,8 +11,9 @@ export default function DashboardPage() {
   useEffect(() => {
     const token = tokenStore.getAccess();
     if (!token) return navigate('/login');
-
-    fetch(`${API_BASE}/api/users/me`, { headers: { Authorization: `Bearer ${token}` } })
+    fetch(`${API_BASE}/api/users/me`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then((r) => r.json())
       .then((data) => setUser(data.user || null))
       .catch(() => setUser(null));
@@ -23,16 +24,27 @@ export default function DashboardPage() {
     navigate('/login');
   }
 
+  async function handleCreateMeeting() {
+    const token = tokenStore.getAccess();
+    const res = await fetch(`${API_BASE}/api/meetings`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ title: 'New Meeting' })
+    });
+    const data = await res.json();
+    const id = data?.data?._id || data?.data?.id || data?._id || data?.id;
+    if (id) {
+      navigate(`/meeting/${id}`);
+    }
+  }
+
   function handleJoinMeeting(e) {
     e.preventDefault();
-    setJoinError(null);
-
     const trimmed = meetingId.trim();
-    if (!trimmed) {
-      setJoinError('Enter a meeting ID to continue.');
-      return;
-    }
-
+    if (!trimmed) return;
     navigate(`/meeting/${trimmed}`);
   }
 
@@ -44,7 +56,7 @@ export default function DashboardPage() {
           <h2>Dashboard</h2>
           {user ? (
             <p className="muted">
-              Signed in as <strong>{user.name}</strong> ({user.email})
+              Signed in as <strong>{user.name}</strong>
             </p>
           ) : (
             <p className="muted">Loading profile...</p>
@@ -52,24 +64,28 @@ export default function DashboardPage() {
         </div>
         <button onClick={handleLogout}>Sign out</button>
       </div>
-
       <div className="dashboard-grid">
         <section className="card">
+          <h3>Create a meeting</h3>
+          <button onClick={handleCreateMeeting}>
+            Start new meeting
+          </button>
+        </section>
+        <section className="card">
           <h3>Join a meeting</h3>
-          <form onSubmit={handleJoinMeeting} className="stacked-form">
+          <form onSubmit={handleJoinMeeting}
+                className="stacked-form">
             <label>
               Meeting ID
-              <input value={meetingId} onChange={(e) => setMeetingId(e.target.value)} placeholder="e.g. 64f..." />
+              <input
+                value={meetingId}
+                onChange={(e) => setMeetingId(e.target.value)}
+                placeholder="e.g. 64f..."
+              />
             </label>
             <button type="submit">Open room</button>
           </form>
           {joinError && <p className="error-text">{joinError}</p>}
-        </section>
-
-        <section className="card">
-          <h3>Live presence</h3>
-          <p className="muted">The meeting room now subscribes to socket presence updates and room membership checks.</p>
-          <p className="muted">Once you open a room, the participant list and connection state update from the socket events.</p>
         </section>
       </div>
     </section>

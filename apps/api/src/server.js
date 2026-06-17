@@ -13,8 +13,8 @@ async function start() {
     try {
       await connect(uri);
       console.log('Connected to MongoDB');
-    } catch (e) {
-      console.error('Failed to connect to MongoDB, continuing without persistent DB');
+    } catch (_e) {
+      console.error('Failed to connect to MongoDB, continuing without persistent DB', _e);
     }
   }
 
