@@ -8,6 +8,7 @@
     "packages/*"
   ],
   "scripts": {
+    "start": "node apps/api/src/combined-server.js",
     "dev": "node scripts/dev.js",
     "dev:api": "npm run dev -w @intellimeet/api",
     "dev:web": "npm run dev -w @intellimeet/web",
