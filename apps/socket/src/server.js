@@ -190,8 +190,16 @@ try {
   // (useful during initial dev where dependencies might not be installed)
   // eslint-disable-next-line global-require
   const { Server } = require('socket.io');
+  const allowedOrigins = [
+    'http://localhost:5173',
+    process.env.FRONTEND_URL,
+  ].filter(Boolean);
+
   io = new Server(server, {
-    cors: { origin: process.env.SOCKET_CORS_ORIGIN || '*', methods: ['GET', 'POST'] },
+    cors: {
+      origin: allowedOrigins,
+      methods: ['GET', 'POST'],
+    },
   });
 
   if (REDIS_URL) {

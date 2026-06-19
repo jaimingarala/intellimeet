@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: intellimeet-api
+    env: node
+    buildCommand: npm install
+    startCommand: node apps/api/src/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: API_PORT
+        value: "10000"
+      - key: JWT_SECRET
+        sync: false # Set this in Render dashboard manually
+      - key: JWT_REFRESH_SECRET
+        sync: false # Set this in Render dashboard manually
+      - key: MONGODB_URI
+        sync: false # Paste your MongoDB Atlas URI here
+      - key: FRONTEND_URL
+        sync: false # Paste your Vercel URL here (e.g., https://your-app.vercel.app)
+
+  - type: web
+    name: intellimeet-socket
+    env: node
+    buildCommand: npm install
+    startCommand: node apps/socket/src/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SOCKET_PORT
+        value: "10000"
+      - key: API_BASE_URL
+        fromService:
+          type: web
+          name: intellimeet-api
+          envVarKey: host
+          # Note: We will use the external URL for API calls from socket if needed
+      - key: ACCESS_TOKEN_SECRET
+        sync: false # Must match the JWT_SECRET from the intellimeet-api service
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: intellimeet-redis
+          property: connectionString
+      - key: MONGODB_URI
+        sync: false # Paste your MongoDB Atlas URI here (same as API)
+      - key: FRONTEND_URL
+        sync: false # Paste your Vercel URL here (same as API)
+
+  - type: redis
+    name: intellimeet-redis
+    ipAllowList: [] # internal access only
